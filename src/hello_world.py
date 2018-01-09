@@ -10,8 +10,9 @@ cubeStartPos = [0,0,1]
 cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
 boxId = p.loadURDF("r2d2.urdf",cubeStartPos, cubeStartOrientation)
 
-#p.stepSimulation()
-p.setRealTimeSimulation(1)
+#p.stepSimulation() # step simulation once, no timestep argument available
+p.setRealTimeSimulation(1) # enables real-time simulation
+                           # probably uses this this thread, somehow
 
 cubePos, cubeOrn = p.getBasePositionAndOrientation(boxId)
 print(cubePos,cubeOrn)
