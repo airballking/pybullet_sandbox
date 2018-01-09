@@ -1,0 +1,107 @@
+<sdf version="1.5">
+    <model name="Cup">
+        <pose>0 0 0 0 0 0</pose>
+        <link name="mug_link">
+            <pose>0 0 0 0 0 0</pose>
+            <inertial>
+                <pose>0 0 0.05 0 0 0</pose>
+                <inertia>
+                    <ixx>0.00050</ixx>
+                    <ixy>0.00000</ixy>
+                    <ixz>0.00000</ixz>
+                    <iyy>0.00050</iyy>
+                    <iyz>0.00000</iyz>
+                    <izz>0.00080</izz>
+                </inertia>
+                <mass>0.25</mass>
+            </inertial>
+
+            <collision name="mug_collision">
+                <pose>0 0 0 0 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>model://mug/meshes/mug_coll.dae</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>0.3</mu>
+                            <mu2>0.3</mu2>
+                            <slip1>10.0</slip1>
+                            <slip2>10.0</slip2>
+                        </ode>
+                    </friction>
+                    <bounce>
+                        <restitution_coefficient>0.000000</restitution_coefficient>
+                        <threshold>100000.000000</threshold>
+                    </bounce>
+                    <contact>
+                        <ode>
+                            <soft_cfm>0.0</soft_cfm>
+                            <soft_erp>0.0</soft_erp>
+                            <kp>10000000000000000000.0</kp>
+                            <kd>1000.0</kd>
+                            <max_vel>100.000000</max_vel>
+                            <min_depth>0.001000</min_depth>
+                        </ode>
+                        <collide_bitmask>0x03</collide_bitmask>
+                    </contact>
+                </surface>
+            </collision>
+
+            <visual name="mug_visual">
+                <pose>0 0 0 0 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>model://mug/meshes/mug_bottom_fixed.dae</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+                <material>
+                    <script>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                        <name>Gazebo/Grey</name>
+                    </script>
+                </material>
+                <cast_shadows>1</cast_shadows>
+                <transparency>0.5</transparency>
+            </visual>
+
+	    <!-- MUG VIRTUAL CAP, FOR COUNTING SPHERES LEAVING THE MUG -->
+            <collision name="mug_event_collision">
+                <pose>0.0 0.0 0.11 0.0 0.0 0.0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05</radius>
+                        <length>0.000002</length>
+                    </cylinder>
+                </geometry>
+                <surface>
+                    <contact>
+		      <collide_without_contact>true</collide_without_contact>
+                    </contact>
+                </surface>
+            </collision>
+            <!--visual name="mug_event_visual">
+                <pose>0.0 0.0 0.11 0.0 0.0 0.0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05</radius>
+                        <length>0.000002</length>
+                    </cylinder>
+                </geometry>
+                <material>
+                    <script>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                        <name>Gazebo/Blue</name>
+                    </script>
+                </material>
+                <transparency>0.9</transparency>
+            </visual-->
+
+        </link>
+	<allow_auto_disable>false</allow_auto_disable>
+    </model>
+</sdf>

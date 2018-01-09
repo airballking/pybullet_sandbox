@@ -1,0 +1,10 @@
+<robot name="mug">
+  <link name="mug_link">
+      <collision>
+          <origin xyz="0 0 0.1" rpy="0 0 0" />
+          <geometry>
+              <mesh filename="package://pybullet_sandbox/data/mug/meshes/mug.stl" />
+          </geometry>
+      </collision>
+  </link>
+</robot>
