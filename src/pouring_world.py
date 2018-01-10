@@ -13,7 +13,7 @@ class PouringWorld(object):
         p.setRealTimeSimulation(0)
         p.setTimeStep(self.period, self.physicsClient)
         planeId = p.loadURDF("plane.urdf")
-        self.mug_id = p.loadURDF("/home/gbartels/ros/giskard/src/pybullet_sandbox/data/mug/mug.urdf", [0,0,1])
+        self.mug_id = p.loadURDF("/home/georg/ros/giskard/src/pybullet_sandbox/data/mug/mug.urdf", [0,0,1])
 
     def __del__(self):
         print('Cleaning up')
@@ -79,8 +79,9 @@ if __name__ == '__main__':
     rospy.init_node("joint_state_bag_comdr")
     my_world = PouringWorld()
     conv_thresh = 0.01
+    state_id = p.saveState()
     while not rospy.is_shutdown():
+        p.restoreState(state_id)
         my_world.place_object(my_world.mug_id, np.array([1,0,1]), conv_thresh)
         my_world.place_object(my_world.mug_id, np.array([1,1,1]), conv_thresh)
         my_world.place_object(my_world.mug_id, np.array([0,1,1]), conv_thresh)
-        my_world.place_object(my_world.mug_id, np.array([0,0,1]), conv_thresh)
