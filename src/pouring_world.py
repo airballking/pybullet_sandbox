@@ -13,7 +13,7 @@ class PouringWorld(object):
         p.setRealTimeSimulation(0)
         p.setTimeStep(self.period, self.physicsClient)
         planeId = p.loadURDF("plane.urdf")
-        self.mug_id = p.loadURDF("/home/georg/ros/giskard/src/pybullet_sandbox/data/mug/mug.urdf", [0,0,1])
+        self.mug_id = p.loadURDF("/home/gbartels/ros/giskard/src/pybullet_sandbox/data/mug/mug.urdf", [0,0,1])
 
     def __del__(self):
         print('Cleaning up')
