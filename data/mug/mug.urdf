@@ -3,7 +3,7 @@
       <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-              <mesh filename="package://pybullet_sandbox/data/mug/meshes/mug.stl" />
+              <mesh filename="package://pybullet_sandbox/data/mug/meshes/mug.obj" />
           </geometry>
       </collision>
       <inertial>
