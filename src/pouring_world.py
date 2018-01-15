@@ -2,6 +2,7 @@ import pybullet as p
 import pybullet_data
 import numpy as np
 import rospy
+import rospkg
 
 class PouringWorld(object):
     def __init__(self):
@@ -12,8 +13,10 @@ class PouringWorld(object):
         p.setGravity(self.gravity_vector[0], self.gravity_vector[1], self.gravity_vector[2])
         p.setRealTimeSimulation(0)
         p.setTimeStep(self.period, self.physicsClient)
+        # TODO: put this into a separate method
         planeId = p.loadURDF("plane.urdf")
-        self.mug_id = p.loadURDF("/home/gbartels/ros/giskard/src/pybullet_sandbox/data/mug/mug.urdf", [0,0,1])
+        filename = rospkg.RosPack().get_path("pybullet_sandbox") + "/data/mug/mug.urdf"
+        self.mug_id = p.loadURDF(filename, [0,0,1])
 
     def __del__(self):
         print('Cleaning up')
