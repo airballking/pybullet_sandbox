@@ -7,7 +7,7 @@ physicsClient = p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.setGravity(0,0,-10)
 planeId = p.loadURDF("plane.urdf")
-filename = rospkg.RosPack().get_path("my_pkg")+"/data/mug/mug.urdf"
+filename = rospkg.RosPack().get_path("pybullet_sandbox")+"/data/mug/mug.urdf"
 boxId = p.loadURDF(filename)
 
 p.setRealTimeSimulation(1)

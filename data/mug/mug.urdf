@@ -6,9 +6,20 @@
               <mesh filename="package://pybullet_sandbox/data/mug/meshes/mug.obj" />
           </geometry>
       </collision>
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+              <mesh filename="package://pybullet_sandbox/data/mug/meshes/mug.stl" />
+          </geometry>
+          <material name="TransparentGray">
+              <color rgba="0.5 0.5 0.5 0.6"/>
+          </material>
+      </visual>
       <inertial>
           <origin xyz="0 0 0" rpy="0 0 0"/>
           <mass value="0.1"/>
+          <!-- figure out proper inertia values
+               try using this tutorial: http://gazebosim.org/tutorials?tut=inertia -->
           <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
       </inertial>
   </link>
