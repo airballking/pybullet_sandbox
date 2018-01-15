@@ -1,5 +1,8 @@
 <robot name="sphere">
   <link name="sphere_link">
+      <!-- for Yuen's values see:
+      https://github.com/code-iai/iai_gazebo_pkgs/blob/master/iai_gazebo_controllers/worlds/constraint_controller_pouring_right.world
+      -->
       <collision>
           <geometry>
               <sphere radius="0.002"/>
