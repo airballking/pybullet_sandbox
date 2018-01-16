@@ -19,7 +19,7 @@ p.configureDebugVisualizer(p.COV_ENABLE_RENDERING, 0)
 # sphere packing algorithm taken from wiki: https://en.wikipedia.org/wiki/Close-packing_of_equal_spheres
 
 r = 0.002
-p1 = 7
+p1 = 5
 d = 3
 print 4*p1*p1*(d)
 for i in range(-p1, p1):
@@ -31,9 +31,13 @@ for i in range(-p1, p1):
 
             p.loadURDF(sphere_path, [x,y,z+0.01])
 p.configureDebugVisualizer(p.COV_ENABLE_RENDERING, 1)
+p.setTimeStep(0.010)
 print "starting sim"
-p.setRealTimeSimulation(1)
+
 while True:
-    time.sleep(5)
+    p.stepSimulation(physicsClient)
+    minAABB, maxAABB = p.getAABB(boxId)
+    print len(p.getOverlappingObjects(minAABB, maxAABB))
+
 
 p.disconnect()
