@@ -1,3 +1,5 @@
+import interfaces as iface
+
 #
 # Exceptions
 #
@@ -20,10 +22,10 @@ class Simulation(object):
 
     def step(self, time_step=None):
         for callback in self._pre_callbacks.values():
-            callback(self._world)
+            callback.call(self._world)
         self._world.step(time_step)
         for callback in self._post_callbacks.values():
-            callback(self._world)
+            callback.call(self._world)
 
     def steps(self, num_steps=1, time_step=None):
         for _ in range(0, num_steps):
@@ -51,6 +53,8 @@ class Simulation(object):
                                  "A post-callback with name '" + name + "' already exists.")
 
     def _register_callback(self, callback_name, callback, attr_name, error_string):
+        if not iface.CallbackInterface in callback.__class__.__bases__:
+            raise TypeError("Given callback with name '" + callback_name + "' has no base class CallbackInterface.")
         if callback_name in getattr(self, attr_name):
             raise SimulationException(error_string)
         getattr(self, attr_name)[callback_name] = callback
