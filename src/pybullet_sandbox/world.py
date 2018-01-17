@@ -1,6 +1,7 @@
 import pybullet as p
 import pybullet_data as pdata
 import PyKDL as kdl
+from conversions import kdl_vector_to_list
 
 #
 # Exceptions
@@ -55,7 +56,7 @@ class World(object):
         if not type in self._object_type_index:
             self._object_type_index[type] = []
 
-        id = p.loadURDF(filename, (pose.p[0], pose.p[1], pose.p[2]), pose.M.GetQuaternion())
+        id = p.loadURDF(filename, kdl_vector_to_list(pose.p), pose.M.GetQuaternion())
 
         self._object_name_index[name] = id
         self._object_type_index[type].append(id)
@@ -84,9 +85,33 @@ class World(object):
 
     def set_gravity(self, gravity):
         self.__gravity = gravity
-        p.setGravity(self.__gravity[0], self.__gravity[1], self.__gravity[2])
+        p.setGravity(*(kdl_vector_to_list(self.__gravity)))
 
     def step(self, time_step=None):
         if not time_step is None:
             self.set_time_step(time_step)
         p.stepSimulation(self._client_id)
+
+    def get_object_mass(self, object_name):
+        return p.getDynamicsInfo(self.get_object_with_name(object_name), -1)[0]
+
+    def get_object_pose(self, object_name):
+        trans, rot = p.getBasePositionAndOrientation(self.get_object_with_name(object_name))
+        return kdl.Frame(kdl.Rotation.Quaternion(*rot), kdl.Vector(*trans))
+
+    def get_object_twist(self, object_name):
+        trans, rot = p.getBaseVelocity(self.get_object_with_name(object_name))
+        return kdl.Twist(kdl.Vector(*trans), kdl.Vector(*rot))
+
+    def apply_force(self, object_name, force):
+        """ Applies a 3D force on a particular object.
+
+        :param object_name: Name identifier of the object.
+        :param force: 3D force to apply as a KDL Vector.
+        :return: nothing
+        """
+        object_id = self.get_object_with_name(object_name)
+        force_list = kdl_vector_to_list(force)
+        link_id = -1
+        p.applyExternalForce(object_id, link_id, force_list, [0, 0, 0], p.LINK_FRAME)
+
