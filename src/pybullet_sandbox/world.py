@@ -103,6 +103,16 @@ class World(object):
         trans, rot = p.getBaseVelocity(self.get_object_with_name(object_name))
         return kdl.Twist(kdl.Vector(*trans), kdl.Vector(*rot))
 
+    def apply_wrench(self, object_name, wrench):
+        """ Applies a 6D wrench on a particular object.
+
+        :param object_name: Name identifier of the object.
+        :param force: 3D wrench to apply as a KDL Wrench
+        :return: nothing
+        """
+        self.apply_force(object_name, wrench.force)
+        self.apply_torque(object_name, wrench.torque)
+
     def apply_force(self, object_name, force):
         """ Applies a 3D force on a particular object.
 
@@ -114,4 +124,19 @@ class World(object):
         force_list = kdl_vector_to_list(force)
         link_id = -1
         p.applyExternalForce(object_id, link_id, force_list, [0, 0, 0], p.LINK_FRAME)
+
+    def apply_torque(self, object_name, torque):
+        """ Applies a 3D torque on a particular object.
+
+        :param object_name: Name identifier of the object.
+        :param force: 3D torque to apply as a KDL Vector.
+        :return: nothing
+        """
+        object_id = self.get_object_with_name(object_name)
+        torque_list = kdl_vector_to_list(torque)
+        link_id = -1
+        print object_id, torque_list, link_id
+        p.applyExternalTorque(object_id, link_id, torque_list, [0, 0, 0], p.LINK_FRAME)
+
+
 

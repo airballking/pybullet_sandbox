@@ -12,7 +12,7 @@ mug_init_pose = kdl.Frame(kdl.Vector(0.1, 0.2, 0.75))
 my_world.add_urdf_object(mug_file, 'mug_1', 'mug', mug_init_pose)
 
 my_sim = sim.Simulation(my_world)
-mug_goal_pose = kdl.Frame(kdl.Vector(0.3, 0.4, 0.75))
+mug_goal_pose = kdl.Frame(kdl.Rotation.RotX(3.14/4.0), kdl.Vector(0.3, 0.4, 0.75))
 my_sim.register_pre_callback("hovering_controller", ctrl.FlyingObjectController("mug_1", mug_goal_pose))
 
 while True:
