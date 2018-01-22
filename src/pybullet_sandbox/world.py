@@ -135,8 +135,8 @@ class World(object):
         object_id = self.get_object_with_name(object_name)
         torque_list = kdl_vector_to_list(torque)
         link_id = -1
-        print object_id, torque_list, link_id
-        p.applyExternalTorque(object_id, link_id, torque_list, [0, 0, 0], p.LINK_FRAME)
+        # print object_id, torque_list, link_id
+        p.applyExternalTorque(object_id, link_id, torque_list, p.LINK_FRAME)
 
 
 
